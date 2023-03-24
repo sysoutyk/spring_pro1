@@ -159,7 +159,7 @@ $(document).ready(function() {
 			<input type="hidden" id="pjnum" name="pjnum" value="${userVo.pjnum }">
 			<div class="row">
 			<div class="col-md-12" style="text-align:center"><b>"저장" 버튼 누르신후, 청첩장을 확인 하실 수 있습니다.</b>
-			<a type="button" class="btn btn-primary" id="saveTemp" style="margin-left:950px; margin-bottom:20px">저장하기</a>
+			<a type="button" class="btn btn-dark" id="saveTemp" style="margin-left:950px; margin-bottom:20px; color:white"> <b>저장하기</b></a>
 			</div>
 				<!-- Home -->
 				<div class="col-sm-12">
@@ -177,7 +177,7 @@ $(document).ready(function() {
 								</div>
 							</div>
 							<!--                   <div class="blog_bg margin_bottom30"> -->
-							<!--                      <div class="row d_flex"> -->
+				
 							<div class="col-md-6 text_align_center befold" data-state="0">
 								<div class="blog_img ">
 									<figure>
@@ -256,7 +256,7 @@ $(document).ready(function() {
 									</div>
 								</div>
 							</div>
-
+						
 						</div>
 						<!-- row-flex -->
 					</div>
@@ -622,7 +622,7 @@ $(document).ready(function() {
 	<div style="text-align:center; padding-bottom:100px">
 	
 		<a type="button" class="btn btn-warning delTemp"
-			href="/create/delete?userid=${userVo.userid }">템플렛 삭제</a>
+			href="/create/delete?userid=${userVo.userid }"><b>템플렛 삭제</b></a>
 	</div>
 </div>
 <!-- end class="container " -->

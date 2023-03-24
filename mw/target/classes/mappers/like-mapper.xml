@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="mappers.like">
+	<!-- 커플 QnA like  -->
+	<insert id="sendLike">
+		insert into tbl_Ylike(qno, userid)
+		values (#{qno}, #{userid})
+	</insert>
+
+<!-- 	<select id="getLikeCount" resultType="int"> -->
+<!-- 		select count(*) from tbl_Ylike -->
+<!-- 		where qno = #{qno} -->
+<!-- 		 and userid = #{userid} -->
+<!-- 	</select> -->
+
+	<select id="isLike" resultType="int">
+		select count(*) from tbl_Ylike
+		where qno = #{qno}
+		and userid = #{userid}
+	</select>
+	<select id="likecheck" resultType="int">
+		select count(*) from tbl_Ylike
+		where userid = #{userid}
+	</select>
+	<delete id="delLike">
+		delete from tbl_Ylike
+		where qno = #{qno}
+		and userid= #{userid}
+	</delete>
+	<delete id="delete">
+		delete from tbl_Ylike
+		where userid= #{userid}
+	</delete>
+	<!-- END of 커플 QnA like  -->
+	
+</mapper>

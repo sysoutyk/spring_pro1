@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+ <mapper namespace="mappers.read">
+ 	<insert id="insert">
+ 		insert into tbl_Yread(recipient, qno)
+ 					values(#{recipient},#{qno})
+ 	</insert>
+
+ 	<select id="isread">
+ 		select count(*) cnt from tbl_Yread
+ 			where recipient = #{recipient}
+ 			and qno = #{qno}
+ 	</select>
+ 	
+ 	<delete id="delete">
+		delete from tbl_Yread
+		where recipient = #{clientId}
+	</delete>
+ </mapper>

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mappers.message">
+
+	<insert id="insert">
+		insert into tbl_Ymessage(bno, writedate, message, mespic, writer, recipient,uploadstat, rstat)
+		values(seq_ymessage_bno.nextval, #{writedate,jdbcType=VARCHAR}, #{message,jdbcType=VARCHAR},
+		#{mespic,jdbcType=VARCHAR}, #{writer,jdbcType=VARCHAR}, #{recipient},#{uploadstat, jdbcType=VARCHAR},
+		#{rstat, jdbcType=VARCHAR})
+	</insert>
+	<select id="search" resultType="Y_MessageVo">
+		select * from tbl_Ymessage
+		where recipient = #{recipient}
+		and uploadstat = 'upload'
+		order by writedate desc
+	</select>
+	<select id="mypagemes" resultType="Y_MessageVo">
+		select * from
+		(select rownum rnum, a.* from
+		(select * from tbl_Ymessage
+		where recipient = #{recipient}
+		order by writedate desc)a)
+		where rnum between #{startRow} and #{endRow}
+	</select>
+	<select id="mescheck" resultType="int">
+		select count(*) cnt from
+		tbl_Ymessage
+		where recipient = #{recipient}
+	</select>
+	<select id="getcount" resultType="int">
+		select count(*) from tbl_Ymessage
+		where recipient = #{recipient}
+	</select>
+	<select id="getreadcount" resultType="int">
+		select count(*) from
+		tbl_Ymessage
+		where recipient = #{recipient}
+		and rstat = 'read'
+	</select>
+	<select id="isread" resultType="Y_MessageVo">
+		select * from tbl_Ymessage
+		where recipient = #{recipient}
+		and bno = #{bno}
+	</select>
+	<select id="ismesread" resultType="Y_MessageVo">
+		select * from tbl_Ymessage
+		where recipient = #{recipient}
+		and bno = #{bno}
+	</select>
+	<select id="unread" resultType="int">
+		select count(*) from tbl_Ymessage
+        where recipient = #{userid}
+			and rstat is null
+	</select>
+	<update id="update">
+		update tbl_Ymessage set
+		writedate = writedate,
+		message = #{message},
+		mespic = mespic,
+		writer = writer,
+	
+		<choose>
+			<when test="rstat != null">
+				rstat = #{rstat}
+			</when>
+			<when test="rstat == null">
+				rstat = rstat
+			</when>
+		</choose>
+		where bno = #{bno}
+		and recipient = #{recipient}
+	</update>
+	<update id="upload">
+		update tbl_Ymessage set
+		writedate = writedate,
+		message = message,
+		mespic = mespic,
+		writer = writer,
+		<choose>
+			<when test="uploadstat != null">
+				uploadstat = #{uploadstat},
+			</when>
+			<when test="uploadstat == null">
+				uploadstat = uploadstat,
+			</when>
+		</choose>
+		rstat = rstat
+		where bno = #{bno}
+		and recipient = #{recipient}
+	</update>
+	<delete id="delete">
+		delete from tbl_Ymessage
+		where recipient = #{recipient}
+	</delete>
+	<delete id="deleachmes">
+		delete from tbl_Ymessage
+		where recipient = #{recipient}
+		and bno = #{bno}
+	</delete>
+</mapper>

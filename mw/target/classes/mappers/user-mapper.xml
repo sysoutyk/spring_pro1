@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mappers.user">
+	<insert id="insertUser">
+		insert into tbl_user(userid, userpw, username, email, phonenum, url)
+		values(#{userid}, 
+			#{userpw}, 
+			#{username},
+			#{email},
+			#{phonenum},  
+			#{url,jdbcType=VARCHAR} 
+		)
+	</insert>
+	<select id="login" resultType="userVo">
+		select * from tbl_user
+		where userid = #{userid} 
+		and userpw = #{userpw}
+	</select>
+	<select id="isExistId" resultType="int">
+		select count(*) from tbl_user
+		where userid = #{inputId}
+	</select>
+	<select id="isExistUrl" resultType="int">
+		select count(*) from tbl_user
+		where url = ${url}
+	</select>
+	<select id="detail" resultType="userVo">
+		select * from tbl_user
+		where userid = #{userid}
+		and userpw = #{userpw}
+	</select>
+	<select id="findid" resultType="userVo"> 
+		select * from tbl_user where url = #{url} 
+	</select>
+	<select id="checkpjnum" resultType="userVo">
+		select * from tbl_user
+		where userid = #{userid}
+	</select>
+	<update id="modify">
+		update tbl_user set
+		userpw = #{userpw},
+		username = #{username},
+		email = #{email},
+		phonenum = #{phonenum},
+		url = #{url}
+		where userid = #{userid} 
+	</update>
+	
+	<update id="updatepjnum"> 
+		update tbl_user set 
+		pjnum = #{pjnum} 
+		where userid = #{userid} 
+	</update>
+	<update id="updateTemptype"> 
+		update tbl_user set 
+		temptype = #{temptype} 
+		where userid = #{userid} 
+	</update>
+	<update id="defaultTemptype">
+		update tbl_user set
+		temptype = null
+		where userid = #{userid}
+	</update>
+	<delete id="delAccount">
+		delete from tbl_user
+		where userid = #{userid}
+	</delete>
+</mapper>

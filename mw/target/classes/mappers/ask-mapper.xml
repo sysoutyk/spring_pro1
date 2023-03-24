@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+ <mapper namespace="mappers.ask">
+ 	<insert id="insert">
+ 		insert into tbl_Yask(qno, recipient, question, answer, sender, readstat, writedate, replydate)
+ 					values(seq_yask_qno.nextval, #{recipient}, #{question,jdbcType=VARCHAR}, #{answer,jdbcType=VARCHAR}, 
+ 							#{sender,jdbcType=VARCHAR}, #{readstat, jdbcType=VARCHAR}, sysdate, #{replydate, jdbcType=DATE})
+ 	</insert>
+ 	<!-- user table과 합쳐야 함 -->
+ 	<select id="mypageques" resultType="Y_AskVo">
+ 	select * from 
+ 		(select rownum rnum, a.* from
+ 			(select * from tbl_Yask
+ 			 where recipient = #{userid}
+ 			 order by writedate desc)a)
+ 		where rnum between #{startRow} and #{endRow}
+ 	</select>
+ 	<select id="qnalist" resultType="Y_AskVo">
+ 		select * from 
+ 		(select rownum rnum, a.* from
+ 			(select * from tbl_Yask
+ 			 where recipient = #{userid}
+ 			 and answer is not null
+ 			 order by writedate desc)a)
+ 		where rnum between #{startRow} and #{endRow}
+ 	</select>
+ 	<select id="unread" resultType="int">
+		select count(*) from tbl_Yask
+        where recipient = #{userid}
+			and readstat is null
+	</select>
+	<select id="read" resultType="int">
+		select count(*) from tbl_Yask
+			where recipient  = #{userid}
+			and readstat = 'read'
+			and answer is not null
+	</select>
+	<select id="isRead" resultType="Y_AskVo">
+		select * from tbl_Yask
+			where recipient = #{recipient}
+			and qno = #{qno}
+	</select>
+	<select id="quescheck" resultType="int">
+		select count(*) from tbl_Yask
+		where recipient = #{userid}
+	</select>
+	<select id="getcount" resultType="int">
+		select count(*) from tbl_Yask
+			where recipient = #{userid}
+	</select>
+	<update id="update">
+		update tbl_Yask set
+			question = question,
+		<choose>
+			<when test="answer == null">
+				answer = answer,
+				replydate = replydate,
+			</when>
+			<otherwise>
+				answer = #{answer},
+				replydate = sysdate,
+			</otherwise>
+		</choose>
+			sender = sender,
+		<choose>
+			<when test="readstat != null">
+				readstat = #{readstat},
+			</when>
+			<when test="readstat == null">
+				readstat = readstat,
+			</when>
+		</choose>
+			
+			writedate = writedate
+		where recipient = #{recipient}
+			and qno = #{qno}
+	</update>
+	<delete id="deleachques">
+		delete from tbl_Yask
+		where recipient = #{recipient}
+			and qno = #{qno}
+	</delete>
+ 	<delete id="delete">
+		delete from tbl_Yask
+		where recipient = #{recipient}
+	</delete>
+	<!-- 하객질문 하트  -->
+	<insert id="sendLike">
+		insert into tbl_yguestask_like(qno, recipient)
+		values (#{qno}, #{userid})
+	</insert>
+	<select id="isLike" resultType="int">
+			select count(*) from tbl_yguestask_like
+			where qno = #{qno}
+			and recipient = #{userid}
+	</select>
+	<update id="updateLikeCnt">
+		update tbl_Yask set
+			likecount = likecount + #{count}
+		where qno = #{qno}
+ 	</update> 
+	<delete id="delLike">
+		delete from tbl_yguestask_like
+		where qno = #{qno}
+		and recipient= #{recipient}
+	</delete>
+	<delete id="delAskLike">
+		delete from tbl_yguestask_like
+		where recipient= #{recipient}
+	</delete>
+	<!-- END of 하객질문 하트  -->
+ </mapper>

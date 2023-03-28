@@ -28,7 +28,10 @@ public class MainController {
 		Model.addAttribute("url", userVo.getUrl());
 		return "main/create_form";
 	}
-	
+	@RequestMapping(value = "/choose_temp", method = RequestMethod.GET)
+	public String chooseForm(HttpSession session, Model Model) {
+		return "create/choose_temp";
+	}
 	// 메인페이지 - Log in
 	@RequestMapping(value = "/login_form", method = RequestMethod.GET)
 	public String login() {

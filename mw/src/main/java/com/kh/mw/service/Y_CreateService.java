@@ -59,9 +59,6 @@ public class Y_CreateService {
 		Y_HomeVo homeVo = y_createDao.searchHome(userid);
 		Y_StoryVo storyVo = y_createDao.searchStory(userid);
 		List<Y_QnaVo> qnaVo = y_createDao.searchQna(userid, pagingDto);
-		if(qnaVo == null) {
-			return null;
-		}
 		Y_TravelVo travelVo = y_createDao.searchTravel(userid);
 		Y_PhotoVo photoVo = y_createDao.searchPhoto(userid);
 		List<Y_MessageVo> mesVo = y_createDao.getMes(userid);
@@ -69,7 +66,7 @@ public class Y_CreateService {
 		int askcount = y_guestDao.getreadcount(userid);
 		pagingDto.setPagingInfo(pagingDto.getPage(), askcount, pagingDto.getPerPage());
 		int qnacount = y_createDao.countQna(userid);
-					
+		System.out.println("createservice qnaVo: " + qnaVo);		
 
 		Map<String, Object> map = new HashMap<>();
 		map.put("homeVo", homeVo);

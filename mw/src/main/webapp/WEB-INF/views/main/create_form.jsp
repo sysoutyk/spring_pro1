@@ -51,7 +51,7 @@ $(document).ready(function() {
 								</c:when>
 								<c:otherwise>
 									<!-- 만들던 프로젝트가 없는 경우 -->
-									<a class="read_more" href="/create/choose_temp"
+									<a class="read_more" href="/main/choose_temp"
 										>새 프로젝트 만들기</a>
 								</c:otherwise>
 							  </c:choose>

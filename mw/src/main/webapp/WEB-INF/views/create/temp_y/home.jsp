@@ -215,8 +215,7 @@
 							class="display-4 mb-5">♥</span> &nbsp;<span
 							class="display-4 mb-5">${map.homeVo.groomNm }</span>
 						<div class="mb-2" style="margin-top: 120px">
-							<a class="btn btn-primary btn-shadow btn-lg lnr lnr-rocket"
-								id="announce" href="#" role="button"> 축의금 보내기 </a> <a
+							 <a
 								class="btn btn-icon btn-lg"
 								href="https://player.vimeo.com/video/33110953"
 								data-featherlight="iframe"

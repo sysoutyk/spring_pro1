@@ -113,9 +113,10 @@ public class Y_CreateDao {
 		map.put("startRow", pagingDto.getStartRow());
 		map.put("endRow", pagingDto.getEndRow());
 		map.put("userid", userid);
+		System.out.println("searchQna userid: " + userid);
 		List<Y_QnaVo> qnaVo = sqlSession.selectList(NAMESPACE_Q + "search", map);
 //		System.out.println("searchQna pagingDto" + pagingDto.toString());
-//		System.out.println("dao QnaVo: " + qnaVo);
+		System.out.println("dao QnaVo: " + qnaVo);
 		return qnaVo;
 	}
 

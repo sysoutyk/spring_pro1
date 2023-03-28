@@ -24,7 +24,7 @@
 	</select>
 	<select id="isExistUrl" resultType="int">
 		select count(*) from tbl_user
-		where url = ${url}
+		where url = #{url}
 	</select>
 	<select id="detail" resultType="userVo">
 		select * from tbl_user

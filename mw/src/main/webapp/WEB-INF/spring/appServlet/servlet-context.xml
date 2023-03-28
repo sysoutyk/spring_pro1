@@ -34,8 +34,8 @@
 	<!-- 로그인 인터셉터 빈 -->
 	<beans:bean id="loginInterceptor" class="com.kh.mw.interceptor.LoginInterceptor">
    	</beans:bean>
-   	<beans:bean id="urlInterceptor" class="com.kh.mw.interceptor.UrlInterceptor">
-	</beans:bean>
+<!--    	<beans:bean id="urlInterceptor" class="com.kh.mw.interceptor.UrlInterceptor"> -->
+<!-- 	</beans:bean> -->
 <!-- 	<beans:bean id="yurlInterceptor" class="com.kh.mw.interceptor.YurlInterceptor"> -->
 <!-- 	</beans:bean> -->
 
@@ -61,12 +61,12 @@
     		<exclude-mapping path="/user/register_run"/>
     		<beans:ref bean="loginInterceptor"/>
     	</interceptor>
-    	<interceptor>
-<!-- 			<mapping path="/url/**/*"/> -->
-			<mapping path="/url/*"/>
-			<exclude-mapping path="/url/home"/>
-			<beans:ref bean="urlInterceptor"/>
-		</interceptor>
+<!--     	<interceptor> -->
+<!-- 			<mapping path="/url/**/*"/> --> 
+<!-- 			<mapping path="/url/*"/> -->
+<!-- 			<exclude-mapping path="/url/home"/> -->
+<!-- 			<beans:ref bean="urlInterceptor"/> -->
+<!-- 		</interceptor> -->
 		
     </interceptors>
 	

@@ -7,21 +7,19 @@
  
  	<insert id="insert">
  		insert into tbl_Yqna(userid, ques, answer, qno)
- 		values(#{userid}, #{ques,jdbcType=VARCHAR}, #{answer,jdbcType=VARCHAR}, seq_Yqna_qno.nextval)
+ 		values(#{userid}, #{ques,jdbcType=VARCHAR}, #{answer,jdbcType=VARCHAR},#{qno,jdbcType=VARCHAR})
  	</insert>
  	
  	<select id="search" resultType="Y_QnaVo">
- 		
+ 		<![CDATA[
  		select * from
  		(select rownum rnum, a. * from 
- 			<![CDATA[
  			(select * from tbl_Yqna
  			where userid = #{userid}
  				and qno > 0 
  			order by qno desc)a)
- 			]]>
  		where rnum between #{startRow} and #{endRow}
- 		
+ 		]]>
  	</select>
  	<select id="countqna" resultType= "int">
  		select count(*) from tbl_Yqna

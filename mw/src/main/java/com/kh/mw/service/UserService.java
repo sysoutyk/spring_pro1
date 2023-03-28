@@ -36,7 +36,7 @@ public class UserService {
 	}
 	public boolean isExistUrl(String url) {
 //		System.out.println("서비스: url체크" + inputUrl);
-		return userDao.isExistId(url);
+		return userDao.isExistUrl(url);
 	}
 	public UserVo detail(String userid, String userpw) {
 //		System.out.println("서비스: 디테일");

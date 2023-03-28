@@ -10,9 +10,6 @@ $(document).ready(function() {
 			case "preview_tempY":
 		 		window.open("/ysample/sampleHome");
 				break;
-			case "preview_tempH":
-		 		window.open("/create/preview_tempH");
-				break;
 		}
 	});
 	
@@ -22,9 +19,6 @@ $(document).ready(function() {
 		switch (id) {
 			case "temp_y":
 				$(location).attr('href', '/create/form');
-				break;
-			case "temp_h":
-				$(location).attr('href', '/tempH/insert_info');
 				break;
 		}
 	});
@@ -60,7 +54,7 @@ $(document).ready(function() {
             <div class="row">
                <div class="col-sm-12">
                   <div class="titlepage">
-                     <h3>아래의 두 가지 템플릿 중에서 마음에 드는 템플릿을 선택해주세요.</h3>
+                     <h3>현재 제공하는 템플렛은 제한적입니다. 빠른시일내에 더 풍성한 옵션을 제공하는 mw가 되겠습니다.</h3>
                   </div>
                </div>
             </div>
@@ -69,30 +63,28 @@ $(document).ready(function() {
                   <div class="plan_bax text_align_center">
                   	 <div id="preview_tempY" class="wrapdiv_dark" style="cursor:pointer;">
 	                  	 <div class="imgdiv_dark">
-	                  	 	<img class="img_dark" src="/main_temp/images/plan_img.jpg" alt="#">
-	                  	 	<p class="text_dark" style="display:none"><a href="#" style="color: white">템플릿 미리보기</a></p>
+	                  	 	<img class="img_dark" src="/create_tempY/img/ysample_home.png" alt="#">
+	                  	 	<p class="text_dark" style="display:none"><a href="#" style="color: white">템플렛 미리보기</a></p>
 	                  	 </div>
                   	 </div>
                   	 <div id="temp_y" class="plan_text template_box">
                         <h3>예은's템플릿</h3>
-                        <p style="padding:20px 0 0">예은이의 템플릿입니다.<br>
+                        <p style="padding:20px 0 0">예은이의 템플렛입니다.<br>
                         	만드려면 클릭하세요.</p>
                      </div>
                   </div>
                </div>
-               
-               <div class="col-md-6">
+                <div class="col-md-6">
                   <div class="plan_bax text_align_center">
-                  	 <div id="preview_tempH" class="wrapdiv_dark" style="cursor:pointer;">
+                  	 <div class="wrapdiv_dark" style="cursor:pointer;">
 	                  	 <div class="imgdiv_dark">
-	                  	 	<img class="img_dark" src="/main_temp/images/plan_img1.jpg" alt="#">
-	                  	 	<p class="text_dark" style="color: white; display:none;">템플릿 미리보기</p>
+	                  	 	<img class="img_dark" src="/main_temp/images/plan_img.jpg" alt="#">
+	                  	 	<p class="text_dark" style="display:none"><a href="#" style="color: white">템플렛 미리보기</a></p>
 	                  	 </div>
                   	 </div>
-                     <div id="temp_h" class="plan_text template_box">
-                        <h3>혜령's템플릿</h3>
-                        <p style="padding:20px 0 0">혜령이의 템플릿입니다.<br>
-                        	만드려면 클릭하세요.</p>
+                  	 <div class="plan_text template_box">
+                        <h3>준비중인 템플릿</h3>
+                        <p style="padding:20px 0 0">준비중인 템플렛입니다.<br>
                      </div>
                   </div>
                </div>

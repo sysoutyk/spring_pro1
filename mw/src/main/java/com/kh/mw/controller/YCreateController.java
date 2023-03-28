@@ -147,18 +147,34 @@ public class YCreateController {
 
 		//Q+A 첫입력	
 		boolean qna_result = false;
-		
+		System.out.println("ques: " + ques);
+		System.out.println("answers: " + answers);
+		System.out.println("qno: " + qno);
 		int nextQno;
 		List<Y_QnaVo> insert_list = new ArrayList<>();
 		if(prevPjnum == 0) {
-			nextQno = y_createService.getNextval_QnA();
+			System.out.println("Q+A 첫입력");
+			System.out.println("ques.size(): " + ques.size());
 			
-			for(int i=0; i<ques.size(); i++) {
+			if(ques.size() == 0) {
+				nextQno = y_createService.getNextval_QnA();
+				System.out.println("ques.size is 0");
+				qnaVo.setQues(null);
+				qnaVo.setAnswer(null);
 				qnaVo.setQno(nextQno);
-				qnaVo.setQues(ques.get(i));
-				qnaVo.setAnswer(answers.get(i));
-				insert_list.add(qnaVo);
 				qna_result = y_createService.insertQnA(qnaVo);
+				System.out.println("controller insert Q+A: " + qna_result);
+			}else {
+				for(int i=0; i<ques.size(); i++) {
+					nextQno = y_createService.getNextval_QnA();
+					System.out.println("nextQno: " + nextQno);
+					qnaVo.setQno(nextQno);
+					qnaVo.setQues(ques.get(i));
+					qnaVo.setAnswer(answers.get(i));
+					insert_list.add(qnaVo);
+					qna_result = y_createService.insertQnA(qnaVo);
+					System.out.println("controller insert Q+A: " + qna_result);
+				}
 			}
 		}
 		//Q+A수정

@@ -21,13 +21,6 @@ $(document).ready(function() {
 		$(".chkques").trigger("click");
 	});
 	var recipient = "${loginInfo.userid}";
-// 	$(".question").click(function() {
-// 		var selected_ques = $(this).text();
-// 		var qno = parseInt($(this).parent().prev().prev().text());
-// 		console.log("qno: " + qno);
-		
-// 	});//.question(click)
-	
 	//질문 선택
 	$(".chkmes").click(function(){
 		var chkbno = $(this).parent().parent().next().text();
@@ -111,8 +104,8 @@ $(document).ready(function() {
 					});
 				}	
 			});
-		
-		$("#editmes").on("click", function(){
+		//모달창 버튼
+		$("#close").on("click", function(){
 			var message = $("#message").val();
 			console.log("message: " + message);
 			var url_reply = "/yguest/updatemes";
@@ -128,8 +121,31 @@ $(document).ready(function() {
 					 window.location.reload();
 				};
 			});
+		});//btn_close
+		
+		$("#editmes").on("click", function(){
+			$("#editmes").hide(500);
+			$("#finishEdit").show(500);
+			$("#message").removeAttr("readonly");
+			$("#finishEdit").on("click",function(){
+				console.log("finishEdit click");
+				var message = $("#message").val();
+				console.log("message: " + message);
+				var url_reply = "/yguest/updatemes";
+				var sData_reply = {
+						"bno": bno,
+						"message" : message, 
+						"rstat": rstat,
+						"recipient": recipient
+				};
+				$.post(url_reply, sData_reply, function(rData_reply){
+					if(rData_reply == true){
+						$("#closeReply").trigger("click");
+						 window.location.reload();
+					};
+				});
+			});//$("#finishEdit")
 		});
-
 	
 	});//$(".message").click
 	
@@ -147,29 +163,7 @@ $(document).ready(function() {
 		$("#frmPaging").find("input[name=page]").val(nextpage);
 		$("#frmPaging").attr("action", "/user/guestmes").submit();
 	});
-// 	var path = window.location.href;
-// 	console.log(path);
-// 	var slashIndex = path.lastIndexOf("/");
-// 	console.log(slashIndex);
-// 	var prevpage = path.substring(slashIndex+1);
-// 	console.log(prevpage);
-// 	var nowpage;
-// 	switch(prevpage){
-// 	case mypage:
-// 		nowpage = $("#mypage");
-// 		console.log("mypage");
-// 		break;
-// 	case inputpassword:
-// 		nowpage = $("#editinfo");
-// 		console.log("editinfo");
-// 		break;
-// 	}
-// 	  var activeCtg = $(".nav-link.active");
-//    	  if (activeCtg.length == 1) {
-//    		  activeCtg.removeClass("active");
-//    	  }
-// 	nowpage.addCalss("active");
-	
+
 	//업로드 승인하기
 	$(".btnupload").click(function(e){
 		e.preventDefault();
@@ -279,10 +273,11 @@ $(document).ready(function() {
 										</button>
 									</div>
 									<div class="modal-body">
-										<textarea class="form-control" rows="5" id="message"></textarea>
+										<textarea class="form-control" rows="5" id="message" readonly></textarea>
 									</div>
 									<div class="modal-footer">
-									<button type="button" class="btn btn-secondary" data-dismiss="modal" id="editmes">수정완료</button>
+									<button type="button" class="btn btn-secondary" id="editmes">수정</button>
+									<button type="button" class="btn btn-secondary" data-dismiss="modal" id="finishEdit" style="display:none">수정완료</button>
 										<button type="button" class="btn btn-secondary" data-dismiss="modal" id="close">닫기</button>
 									</div>
 								</div>

@@ -29,33 +29,34 @@ public class Y_CreateService {
 	Y_LikeDao y_likeDao;
 	@Autowired
 	Y_GuestDao y_guestDao;
-
+	
+	//템플렛 정보입력
 	public boolean insert(Y_HomeVo homeVo, Y_StoryVo storyVo, Y_TravelVo travelVo, Y_PhotoVo photoVo, int prevPjnum) {
 		return y_createDao.insert(homeVo, storyVo, travelVo, photoVo, prevPjnum);
 	}
-
+	//템플렛 Q+A입력
 	public boolean insertQnA(Y_QnaVo qnaVo) {
-		System.out.println("service qna" + qnaVo);
 		return y_createDao.insertQnA(qnaVo);
 	}
+	//Q+A qno 존재여부 확인
 	public int isExistQno(String userid, int prevqno) {
 		return y_createDao.isExistQno(userid, prevqno);
 	}
+	//Q+A 다음 qno 받기
 	public int getNextval_QnA() {
 		return y_createDao.getNextVal_QnA();
 	}
+	//Q+A 업데이트
 	public boolean updateQna(Y_QnaVo qnaVo) {
-		System.out.println("service update qna: " + qnaVo);
 		return y_createDao.updateQna(qnaVo);
 	}
+	//Q+A 개별삭제
 	public boolean delQna(int qno, String userid) {
 		return y_createDao.delQna(qno, userid);
 	}
 
 	@Transactional
-	public Map<String, Object> searchInfo(String userid, Y_GuestPagingDto pagingDto) {
-		
-//		System.out.println("service searchId" + userid);
+	public Map<String, Object> searchInfo(String userid, Y_GuestPagingDto pagingDto) {		
 		Y_HomeVo homeVo = y_createDao.searchHome(userid);
 		Y_StoryVo storyVo = y_createDao.searchStory(userid);
 		List<Y_QnaVo> qnaVo = y_createDao.searchQna(userid, pagingDto);
@@ -81,48 +82,49 @@ public class Y_CreateService {
 		
 		return map;
 	}
-
+	//청첩장 home탭
 	public Y_HomeVo searchHome(String userid) {
 		return y_createDao.searchHome(userid);
 	}
-
+	//청첩장 our story탭
 	public Y_StoryVo searchStory(String userid) {
 		return y_createDao.searchStory(userid);
 	}
-
+	//청첩장 Q+A
 	public List<Y_QnaVo> searchQna(String userid, Y_GuestPagingDto pagingDto) {
 		int qnacount = y_createDao.countQna(userid);
 		pagingDto.setPagingInfo(pagingDto.getPage(), qnacount, pagingDto.getPerPage());
 		return y_createDao.searchQna(userid, pagingDto);
 	}
-
+	//청첩장 travel탭
 	public Y_TravelVo searchTravel(String userid) {
 		return y_createDao.searchTravel(userid);
 	}
-
+	//청첩장 쪽지보내기창+footer
 	public Y_PhotoVo searchPhoto(String userid) {
 		return y_createDao.searchPhoto(userid);
 	}
-	//하객 질문 서치
+	//하객질문 서치
 	public List<Y_AskVo> searchGuestqna(String userid, Y_GuestPagingDto pagingDto) {
 		return y_guestDao.qnalist(userid, pagingDto);
 	}
-	// 하객 축하+감사 쪽지 입력
+	// 하객쪽지 입력
 	public boolean insertMes(Y_MessageVo mesVo) {
 		return y_createDao.insertMes(mesVo);
 	}
-	//하객 쪽지 서치
+	//하객쪽지 서치
 	public List<Y_MessageVo> searchMes(String userid) {
 		return y_createDao.getMes(userid);
 	}
+	//하객쪽지 카운트
 	public boolean mescount (String userid) {
 		return y_createDao.mescount(userid);
 	}
-	//하객 쪽지 삭제
+	//하객쪽지 삭제
 	public boolean delMes(String userid) {
 		return y_createDao.delMes(userid);
 	}
-	
+	//템플렛 삭제
 	public boolean delete(String userid) {		
 		return y_createDao.delete(userid);
 	}

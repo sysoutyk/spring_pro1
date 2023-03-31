@@ -239,8 +239,8 @@ $(document).ready(function() {
 					</c:when>
 				<c:otherwise>
 					<!-- 만들던 프로젝트가 없는 경우 -->
-					<a class="read_more" href="/create/choose_temp"
-						>청첩장 만들기</a>
+					<a class="read_more" href="/main/choose_temp">청첩장 만들기</a>
+					  <a class="read_more" href="/guest/guestlist">하객 목록 보기</a>
 				</c:otherwise>
 			  </c:choose>
 			

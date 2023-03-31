@@ -105,7 +105,7 @@ $(document).ready(function(){
 					                   ${fn:substring(map.homeVo.brideNm,0,3) } +
 										${fn:substring(map.homeVo.groomNm,0,3) }                
 								</span>
-								<h2>Q + A</h2>
+								<h2>Q + A from 커플</h2>
 							</div>
 						</div>						
 					</div>

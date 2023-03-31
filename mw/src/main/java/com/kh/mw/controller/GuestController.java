@@ -59,7 +59,6 @@ public class GuestController {
 	@RequestMapping(value="/delete", method = RequestMethod.POST)
 	@ResponseBody
 	public String delete(@RequestParam(value="arr_g_no[]") int[] arr_g_no) {
-		System.out.println(arr_g_no);
 		for(int msg_no : arr_g_no) {
 			System.out.println(msg_no);
 		}
@@ -71,7 +70,6 @@ public class GuestController {
 	@RequestMapping(value = "/modify", method = RequestMethod.POST)
 	@ResponseBody
 	public String modify(GuestVo guestVo) {
-		System.out.println("Controller, modify : " + guestVo);
 		boolean result = guestService.guestModify(guestVo);
 		return String.valueOf(result);
 	}

@@ -154,12 +154,14 @@ p{
 								<ul class="navbar-nav mr-auto">
 									<li class="nav-item" id="ctgHome"><a class="nav-link"
 										href="/main/home_form">Home</a></li>
-									<li class="nav-item" id="ctgPlanner"><a class="nav-link"
-										href="/vendor/list">Planner</a></li>
+									<li>
+										<a class="nav-link" href="/vendor/list">Planner</a>
+			                        </li>
 									<li class="nav-item" id="ctgCreate"><a class="nav-link"
 										href="/main/create_form">Create My Page</a></li>
 									<li class="nav-item" id="ctgQna"><a class="nav-link"
 										href="/qna/qnaList">QnA</a></li>
+									<li>
 									<c:choose>
 										<c:when test="${empty loginInfo}">
 										<!-- 로그인이 되어 있지 않은 경우 -->
@@ -174,10 +176,6 @@ p{
 											<c:choose>
 												<c:when test="${loginResult eq 'manager'}">
 													<div class="dropdown">
-<!-- 														<p class="fa dropdown-toggle" type="button" -->
-<!-- 															data-toggle="dropdown"> -->
-<!-- 															관리자님 환영합니다. -->
-<!-- 														</p> -->
 														<ul class="navbar-nav mr-auto">
 															<li class="nav-item"><a href="#" class="nav-link" style="color:#E76F64">관리자님 환영합니다.&nbsp<i class="fa fa-sort-desc" aria-hidden="true"></i></a>
 														<ul class="dropdown-menu" style="right:0">
@@ -216,6 +214,7 @@ p{
 											</c:choose>
 										</c:otherwise>
 									</c:choose>
+								</li>
 								</ul>
 							</div>
 						</nav>
@@ -240,10 +239,7 @@ p{
 												<span class="orang">Merry</span><span class="orang">
 													Wedding</span>
 											</h1>
-											<p>Lorem ipsum dolor sit amet, consectetur adipiscing
-												elit, sed do eiusmod tempor incididunt ut laboreLorem ipsum
-												dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-												tempor incididunt ut labore</p>
+											<p>당신의 아름다운 순간을 정성을 다해 함께 하겠습니다.</p>
 										</div>
 									</div>
 								</div>

@@ -18,14 +18,12 @@ public class AdminService {
 	
 	//벤더 등록하기
 	public boolean insertVendor(VendorVo vendorVo) {
-		System.out.println("AdminService,vendorVo:"+vendorVo);
 		return adminDao.insertVendor(vendorVo);
 	}
 	
 	//벤더 관리자 -  목록가져오기
 	public List<VendorVo> listVendor(VendorVo vendorVo,PagingVo pagingVo){
 		List<VendorVo> list=adminDao.listVendor(vendorVo,pagingVo);
-//		System.out.println("AdminService,vendorVo:"+vendorVo);
 		return list;
 	}
 	

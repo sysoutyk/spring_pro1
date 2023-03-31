@@ -21,6 +21,8 @@ import com.kh.mw.vo.Y_LikeVo;
 public class YLikeController {
 	@Autowired
 	 Y_LikeService y_likeService;
+	
+	//하트 쿠키저장
 	@RequestMapping(value="/chkcookie", method=RequestMethod.GET)
 	@ResponseBody
 	public String checkCookie(HttpServletRequest request, Model model, HttpServletResponse response) {
@@ -29,21 +31,18 @@ public class YLikeController {
 		for(Cookie aCookie : cookies) {
 			String cname = aCookie.getName();
 			cvalue = aCookie.getValue();
-			System.out.println("cname: " + cname);
-			System.out.println("cvalue: " + cvalue);
 			aCookie.setMaxAge(60*60*24);
 			response.addCookie(aCookie);
 		}	
 		return cvalue;
 	}
-	
+	//커플 Q+A하트 보내기
 	@RequestMapping(value="/sendLike", method= RequestMethod.POST)
 	@ResponseBody
 	public boolean sendLike(Y_LikeVo likeVo) {				
-		System.out.println("like controller:" + likeVo);		
 		return y_likeService.sendLike(likeVo);
 	}
-	
+	//하트가 존재여부 확인
 	@RequestMapping(value="/isLike", method= RequestMethod.GET)
 	@ResponseBody
 	public String isLike(Y_LikeVo likeVo) {

@@ -26,14 +26,9 @@ public class VendorController {
 		
 		//페이징처리하기
 		pagingVo.setPagingInfo(pagingVo.getPage(), pagingVo.getPerPage(), vendorService.getCount(pagingVo, vendorVo));
-		
 		List<VendorVo> list = vendorService.listVendor(vendorVo, pagingVo);
 		model.addAttribute("list",list);
 		model.addAttribute("pagingVo",pagingVo);
-		
-		System.out.println("VendorController,list"+list);
-		System.out.println("VendorController,pagingVo"+pagingVo);
-		
 		return "vendor/list";
 	}
 	

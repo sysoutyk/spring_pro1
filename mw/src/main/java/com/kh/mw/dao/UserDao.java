@@ -15,53 +15,48 @@ public class UserDao {
 	
 	@Autowired
 	private SqlSession sqlSession;
-	
+	//회원등록 런
 	public boolean registerRun(UserVo userVo) {
-//		System.out.println(userVo);
 		int count = sqlSession.insert(NAMESPACE + "insertUser", userVo);
-		System.out.println(count);
 		if(count>0) {
 			return true;
 		}
 		return false;
 	}
-
+	//로그인 런
 	public UserVo login_run(String userid, String userpw) {
-//		System.out.println("로그인런 다오");
 		Map<String, String> map = new HashMap<>();
 		map.put("userid", userid);
 		map.put("userpw", userpw);
 		UserVo vo = sqlSession.selectOne(NAMESPACE + "login", map);
 		return vo;
 	}
+	//id존재 여부확인
 	public boolean isExistId(String inputId) {
-//		System.out.println("다오: 아이디체크" + inputId);
 		int count = sqlSession.selectOne(NAMESPACE + "isExistId" , inputId);
-		System.out.println(count);
 		if(count>0) {
 			return true;
 		}
 		return false;
 	}
+	//url존재 여부 확인
 	public boolean isExistUrl(String url) {
-		System.out.println("url: " + url);
 		int count = sqlSession.selectOne(NAMESPACE + "isExistUrl" , url);
-		System.out.println("isExistUrl:" + count);
 		if(count>0) {
 			return true;
 		}
 		return false;
 	}
+	//회원정보 상세보기
 	public UserVo detail(String userid, String userpw) {
-//		System.out.println("다오: 디테일");
 		Map<String, String> map = new HashMap<>();
 		map.put("userid", userid);
 		map.put("userpw", userpw);
 		UserVo userVo = sqlSession.selectOne(NAMESPACE + "detail", map);
 		return userVo;
 	}
+	//회원정보 수정
 	public boolean modify(UserVo userVo) {
-//		System.out.println("모디파이다오" + userVo);
 		Map<String, String> map = new HashMap<>();
 		map.put("userid", userVo.getUserid());
 		map.put("userpw", userVo.getUserpw());
@@ -78,10 +73,7 @@ public class UserDao {
 
 	//pjnum status 체크
 	public int checkpjnum(String userid) {
-		System.out.println("checkpjnum userid: " + userid);
 		UserVo userVo = sqlSession.selectOne(NAMESPACE + "checkpjnum", userid);
-		System.out.println("checkpjnum userVo: " + userVo);
-		System.out.println("pjnum: " + userVo.getPjnum());
 		return userVo.getPjnum();
 	}
 	//업데이트 pjnum
@@ -101,23 +93,25 @@ public class UserDao {
 		}
 		return sqlSession.update(NAMESPACE + "updatepjnum", map);
 	}
+	//템플렛 타입 업데이트
 	public int updateTemptype(String temptype, String userid) {
 		Map<String,Object> map = new HashMap<>();
 		map.put("temptype", temptype);
 		map.put("userid", userid);
 		return sqlSession.update(NAMESPACE + "updateTemptype", map);
 	}
+	//템플렛 타입 기본값설정
 	public boolean defaultTemptype(String temptype, String userid) {
 		Map<String,Object> map = new HashMap<>();
 		map.put("temptype", temptype);
 		map.put("userid", userid);
-//		System.out.println("temptype: " + temptype);
 		int count = sqlSession.update(NAMESPACE + "defaultTemptype", map);
 		if(count > 0) {
 			return true;
 		}
 			return false;
 	}
+	//회원탈퇴
 	public boolean delAccount(String userid) {
 		int count = sqlSession.update(NAMESPACE + "delAccount", userid);
 		if(count > 0) {
@@ -125,13 +119,10 @@ public class UserDao {
 		}
 		return false;
 	}
+	//url로 userid 찾기
 	public String findid(String url) {
-//		System.out.println("userdao url: " + url);
 		UserVo userVo = sqlSession.selectOne(NAMESPACE + "findid", url);
 		String userid = userVo.getUserid();
-//		System.out.println("userDao userid: " + userid);
 		return userid;
 	}
-	
-
 }

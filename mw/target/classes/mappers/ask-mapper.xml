@@ -43,10 +43,6 @@
 			where recipient = #{recipient}
 			and qno = #{qno}
 	</select>
-	<select id="quescheck" resultType="int">
-		select count(*) from tbl_Yask
-		where recipient = #{userid}
-	</select>
 	<select id="getcount" resultType="int">
 		select count(*) from tbl_Yask
 			where recipient = #{userid}

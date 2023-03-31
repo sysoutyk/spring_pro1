@@ -20,7 +20,6 @@ public class CheckDao {
 	//체크리스트 등록하기
 	public boolean insertCheck(CheckVo checkVo) {
 		int count=sqlSession.insert(NAMESPACE+"insertCheck",checkVo);
-		System.out.println("CheckDao,checkVo"+checkVo);
 		if(count>0) {
 			return true;
 		}

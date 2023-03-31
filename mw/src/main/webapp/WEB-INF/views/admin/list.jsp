@@ -115,7 +115,7 @@ $(document).ready(function(){
 
 						<div class="input-group" style="margin-left: 70px; margin-top: 70px;">
 
-							<select class="form-control" name="v_category">
+							<select class="form-control" name="v_category" style="margin-right:20px">
 								<option value="100"
 									<c:if test="${pagingVo.v_category == '100'}">selected</c:if>>Wedding
 									Hall</option>
@@ -132,7 +132,7 @@ $(document).ready(function(){
 									<c:if test="${pagingVo.v_category == '400'}">selected</c:if>>Gifts
 								</option>
 							</select> 
-							<select class="form-control" name="v_local" >
+							<select class="form-control" name="v_local" style="margin-right:20px">
 								<option value="1"
 									<c:if test="${pagingVo.v_local == '1'}">selected</c:if>>서울시
 								</option>
@@ -155,7 +155,7 @@ $(document).ready(function(){
 							</select>
 
 							<div class="input-group-append">
-								<button id="btnSearch" class="btn btn-secondary" type="button">검색하기</button>
+								<button id="btnSearch" class="btn btn-secondary" type="button" style="margin-right:20px">검색하기</button>
 							</div>
 							<div class="input-group-append">
 								<button id="btnInsert" class="btn btn-secondary" type="button">등록하기</button>

@@ -25,7 +25,6 @@ public class GuestService {
 	public boolean guestRegister(GuestVo guestVo) {
 		int g_no = guestDao.getNextVal();
 		guestVo.setG_no(g_no);
-		System.out.println(guestVo);
 		return guestDao.guestRegister(guestVo);
 	}
 	

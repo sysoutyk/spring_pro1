@@ -246,7 +246,17 @@
 	                           <a class="nav-link" href="/main/home_form">Home</a>
 	                        </li>
 	                        <li class="nav-item" id="ctgPlanner">
-	                           <a class="nav-link" href="/vendor/list">Planner</a>
+	                        <a class="nav-link" href="/vendor/list">Planner</a>
+<%-- 	                        	<c:choose> --%>
+<!-- 	                        			관리자인 경우 -->
+<%-- 			                           	<c:when test="${loginInfo.userid eq 'admin'}"> --%>
+<!-- 			                           		<a class="nav-link" href="/admin/list">Planner</a> -->
+<%-- 			                           	</c:when> --%>
+<!-- 			                           	관리자가 아닌 경우 -->
+<%-- 			                           	<c:otherwise> --%>
+			                           		
+<%-- 			                           	</c:otherwise> --%>
+<%-- 		                           </c:choose> --%>
 	                        </li>
 	                        <li class="nav-item" id="ctgCreate">
 	                           <a class="nav-link" href="/main/create_form">Create My Page</a>

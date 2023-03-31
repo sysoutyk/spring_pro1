@@ -32,21 +32,12 @@ $(document).ready(function() {
 		                     <span>2가지 템플릿 중 하나를 선택하여 나만의 웨딩 홈페이지를 만들 수 있습니다.
 		                     </span>
 		                     <c:choose>
-								<c:when test="${1 eq loginInfo.pjnum && loginInfo.temptype eq 'H'}">
-									<!-- 만들던 프로젝트가 있는 경우 -->
-									<a class="read_more" href="/tempH/insert_info"
-										>프로젝트로 이동</a>
-								</c:when>
-								<c:when test="${0 eq loginInfo.pjnum && loginInfo.temptype eq 'Y'}">
-									<!-- 만들던 프로젝트가 있는 경우 -->
-									<a class="read_more" href="/create/form"
-										>프로젝트 시작하기</a>
-								</c:when>
+	
 								<c:when test="${1 eq loginInfo.pjnum && loginInfo.temptype eq 'Y'}">
 									<!-- 만들던 프로젝트가 있는 경우 -->
 									<a class="read_more" href="/create/updateform"
 										>진행중인 프로젝트</a>
-									<a class="read_more" href="/create/invite?url=${url }"
+									<a class="read_more" href="/create/invite?url=${loginInfo.url }"
 										>청첩장 보기</a>
 								</c:when>
 								<c:otherwise>

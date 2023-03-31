@@ -22,8 +22,6 @@ public class VendorDao {
 	
 	//고객화면 - 벤더 목록 가져오기
 	public List<VendorVo> listVendor(VendorVo vendorVo, PagingVo pagingVo){
-		System.out.println("VendorDao,vendorVo:"+vendorVo);
-		System.out.println("VendorDao,pagingVo:"+pagingVo);
 		String catecode = null;
 		if (pagingVo.getV_category() != null && pagingVo.getV_local() != null) {
 			int v_category = Integer.parseInt(pagingVo.getV_category()); // 100
@@ -36,13 +34,11 @@ public class VendorDao {
 		map.put("catecode", catecode);
 		map.put("pagingVo", pagingVo);
 		List<VendorVo> list=sqlSession.selectList(NAMESPACE+"listVendor",map);
-		System.out.println("VendorDao,list"+list);
 		return list;
 	}
 	
 	//고객화면 - 벤더 목록 총 갯수
-	public int getCount(PagingVo pagingVo, VendorVo vendorVo) {
-		
+	public int getCount(PagingVo pagingVo, VendorVo vendorVo) {		
 		String catecode = null;
 		if (pagingVo.getV_category() != null && pagingVo.getV_local() != null) {
 			int v_category = Integer.parseInt(pagingVo.getV_category()); // 100

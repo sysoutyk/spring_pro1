@@ -620,9 +620,11 @@ $(document).ready(function() {
 	
 	<!-- end class="row -->
 	<div style="text-align:center; padding-bottom:100px">
-	
-		<a type="button" class="btn btn-warning delTemp"
-			href="/create/delete?userid=${userVo.userid }"><b>템플렛 삭제</b></a>
+		<c:if test="${userVo.pjnum == 1 }">
+			<a type="button" class="btn btn-warning delTemp"
+				href="/create/delete?userid=${userVo.userid }"><b>템플렛 삭제</b></a>
+		</c:if>
+		
 	</div>
 </div>
 <!-- end class="container " -->

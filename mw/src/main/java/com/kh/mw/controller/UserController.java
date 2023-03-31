@@ -40,10 +40,10 @@ public class UserController {
 	}
 	
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String login_run(String userid, String userpw, HttpSession session, RedirectAttributes rttr) {
+	public String login_run(String userid, String userpw, HttpSession session, RedirectAttributes rttr, Model model) {
 		UserVo vo = userService.login_run(userid, userpw);
-		String unreadQues = String.valueOf(y_guestService.unreadQues(userid));
-		String unreadMes = String.valueOf(y_guestService.unreadmes(userid));
+		int unreadQues = y_guestService.unreadQues(userid);
+		int unreadMes = y_guestService.unreadmes(userid);
 		//로그인이 안되거나 탈퇴한 회원이면
 		if(vo==null) {
 			rttr.addFlashAttribute("loginResult","fail");
@@ -68,19 +68,20 @@ public class UserController {
 		if(targetLocation != null && !targetLocation.equals("")) {
 			page = "redirect:" + targetLocation;
 		} else {
+			
 			page = "redirect:/main/home_form";
 		}
 		return page;
 	}
-	
+	//회원등록
 	@RequestMapping(value ="/register", method = RequestMethod.GET)
 	public String register() {
 		return "user/register_form";
 	}
-	
+	//회원등록처리
 	@RequestMapping(value = "/register_run", method = RequestMethod.POST)
 	public String registerRun(UserVo userVo, RedirectAttributes rttr) {
-		boolean result = userService.registerRun(userVo);
+		userService.registerRun(userVo);
 		rttr.addFlashAttribute("register_result", "success");
 		return "redirect:/user/login";
 	}
@@ -88,7 +89,6 @@ public class UserController {
 	@RequestMapping(value = "/isExistId", method = RequestMethod.GET)
 	@ResponseBody
 	public String checkId(String inputId) {
-		System.out.println(inputId);
 		boolean result = userService.isExistId(inputId);
 		String strResult = "";
 		if(result ==true) {
@@ -102,8 +102,6 @@ public class UserController {
 	@RequestMapping(value = "/isExistUrl", method = RequestMethod.GET)
 	@ResponseBody
 	public boolean checkUrl(String url) {
-		System.out.println("checkUrl");
-		System.out.println(url);
 		return  userService.isExistUrl(url);
 	}
 
@@ -113,41 +111,43 @@ public class UserController {
 		return "redirect:/main/home_form";
 	}
 	
-	//mypage페이지
+	//마이페이지 하객질문
 	@Transactional
 	@RequestMapping(value = "/mypage", method= RequestMethod.GET)
 	public String mypage(HttpSession session, Model model, Y_GuestPagingDto pagingDto) {
 		UserVo userVo = (UserVo) session.getAttribute("loginInfo");
-		System.out.println("mypage pagingdto: " +  pagingDto);
 		String unreadQues = String.valueOf(y_guestService.unreadQues(userVo.getUserid()));
 		String unreadMes = String.valueOf(y_guestService.unreadmes(userVo.getUserid()));
-		String clientId = userVo.getUserid();
-		int count = y_guestService.getcount(clientId);
+		
+		int count = y_guestService.getcount(userVo.getUserid());
 		pagingDto.setPagingInfo(pagingDto.getPage(),count, pagingDto.getPerPage());
-		List<Y_AskVo> list = y_guestService.selectQues(clientId, pagingDto);
+		List<Y_AskVo> list = y_guestService.selectQues(userVo.getUserid(), pagingDto);
+		
 		model.addAttribute("list", list);
 		model.addAttribute("unreadQues", unreadQues);
 		model.addAttribute("unreadMes", unreadMes);
 		model.addAttribute("url", userVo.getUrl());
 		model.addAttribute("pagingDto", pagingDto);
-		System.out.println("pagingDto: " + pagingDto);
+		
 		return "/user/mypage";
 	}
 	//마이페이지 하객쪽지
 	@RequestMapping(value="/guestmes", method= RequestMethod.GET)
 	public String guestmessage(HttpSession session, Model model, Y_GuestPagingDto pagingDto) {
 		UserVo userVo = (UserVo) session.getAttribute("loginInfo");
-		String recipient = userVo.getUserid();
 		String unreadQues = String.valueOf(y_guestService.unreadQues(userVo.getUserid()));
 		String unreadMes = String.valueOf(y_guestService.unreadmes(userVo.getUserid()));
-		int count = y_guestService.getmescount(recipient);
+		
+		int count = y_guestService.getmescount(userVo.getUserid());
 		pagingDto.setPagingInfo(pagingDto.getPage(), count, pagingDto.getPerPage());
-		List<Y_MessageVo> list = y_guestService.getmeslist(recipient, pagingDto);
+		List<Y_MessageVo> list = y_guestService.getmeslist(userVo.getUserid(), pagingDto);
+		
 		model.addAttribute("url", userVo.getUrl());
 		model.addAttribute("list", list);
 		model.addAttribute("unreadQues", unreadQues);
 		model.addAttribute("unreadMes", unreadMes);
 		model.addAttribute("pagingDto", pagingDto);
+		
 		return "/user/guestmes";
 	}
 	@RequestMapping(value = "/inputpassword", method = RequestMethod.GET)
@@ -170,13 +170,14 @@ public class UserController {
 			return "redirect:/user/inputpassword";
 		}
 	}
+	//회원정보수정
 	@RequestMapping(value="/modify", method = RequestMethod.POST)
 	public String modify(UserVo userVo, RedirectAttributes rttr) {
 		boolean result = userService.modify(userVo);
 		rttr.addFlashAttribute("update", "success");
 		return "redirect:/user/login";
 	}
-	
+	//회원탈퇴
 	@RequestMapping(value="/delAccount", method = RequestMethod.GET)
 	@ResponseBody
 	public boolean delAccount(String userid, HttpSession session) {

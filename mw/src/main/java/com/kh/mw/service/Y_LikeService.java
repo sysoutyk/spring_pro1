@@ -26,10 +26,6 @@ public class Y_LikeService {
 		return y_likeDao.sendLike(likeVo);
 	}
 
-//	public int getLikeCount(Y_LikeVo likeVo) {
-//		return y_likeDao.getLikeCount(likeVo);
-//	}
-
 	public int isLike(Y_LikeVo likeVo) {
 		return y_likeDao.isLike(likeVo);
 	}
@@ -45,7 +41,6 @@ public class Y_LikeService {
 	@Transactional
 	public boolean send_askLike(Y_AskLikeVo likeVo) {
 		y_guestDao.updateAskLike(likeVo.getQno(), 1);
-		System.out.println("like service:" + likeVo);
 		return y_likeDao.send_askLike(likeVo);
 	}
 	public int is_askLike(Y_AskLikeVo likeVo) {

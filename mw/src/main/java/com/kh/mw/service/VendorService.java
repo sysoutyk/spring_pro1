@@ -19,8 +19,6 @@ public class VendorService {
 	//고객 화면 -  목록가져오기
 	public List<VendorVo> listVendor(VendorVo vendorVo, PagingVo pagingVo){
 		List<VendorVo> list=vendorDao.listVendor(vendorVo, pagingVo);
-//		System.out.println("vendorService,vendorVo:"+vendorVo);
-		System.out.println("vendorService,pagingVo:"+pagingVo);
 		return list;
 	}
 	

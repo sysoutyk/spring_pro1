@@ -50,13 +50,11 @@ public class YCreateController {
 	@Autowired
 	Y_GuestService y_guestService;
 	
-	//청첩장 입력
+	//템플렛 입력창
 	@RequestMapping(value = "/form", method = RequestMethod.GET)
 	public String insertInfo(HttpSession session, Model model) {
 		UserVo userVo = (UserVo)session.getAttribute("loginInfo");
-		userService.updateTemptype("Y", userVo.getUserid());
 		model.addAttribute("userVo", userVo);
-		System.out.println("userVo" + userVo);
 		return "/create/temp_y/form";
 	}
 	//이미지 디스플레이
@@ -83,13 +81,13 @@ public class YCreateController {
 		return null;
 	}// displayImg
 	
-	//pjnum 체크
+	//tbl_user pjnum 체크
 	@RequestMapping(value="/checkpjnum", method= RequestMethod.GET)
 	@ResponseBody
 	public int checkpjnum(String userid) {
 		return userService.checkpjnum(userid);
 	}
-	//청첩장 입력저장
+	//템플렛 저장
 	@RequestMapping(value = "/insertInfo", method = RequestMethod.POST)
 	public String insertRun(
 			@RequestParam("multiFile") List<MultipartFile> multiFileList, 
@@ -147,43 +145,34 @@ public class YCreateController {
 
 		//Q+A 첫입력	
 		boolean qna_result = false;
-		System.out.println("ques: " + ques);
-		System.out.println("answers: " + answers);
-		System.out.println("qno: " + qno);
 		int nextQno;
 		List<Y_QnaVo> insert_list = new ArrayList<>();
+		//입력폼 Q+A
 		if(prevPjnum == 0) {
-			System.out.println("Q+A 첫입력");
-			System.out.println("ques.size(): " + ques.size());
-			
+			//질문+답변 입력하지 않았을경우,
 			if(ques.size() == 0) {
 				nextQno = y_createService.getNextval_QnA();
-				System.out.println("ques.size is 0");
 				qnaVo.setQues(null);
 				qnaVo.setAnswer(null);
 				qnaVo.setQno(nextQno);
 				qna_result = y_createService.insertQnA(qnaVo);
-				System.out.println("controller insert Q+A: " + qna_result);
 			}else {
 				for(int i=0; i<ques.size(); i++) {
 					nextQno = y_createService.getNextval_QnA();
-					System.out.println("nextQno: " + nextQno);
 					qnaVo.setQno(nextQno);
 					qnaVo.setQues(ques.get(i));
 					qnaVo.setAnswer(answers.get(i));
 					insert_list.add(qnaVo);
 					qna_result = y_createService.insertQnA(qnaVo);
-					System.out.println("controller insert Q+A: " + qna_result);
 				}
 			}
 		}
-		//Q+A수정
+		//수정폼 Q+A
 		else if(prevPjnum == 1) {
 			List<Y_QnaVo> update_list = new ArrayList<>();
 			for(int i=0; i<ques.size(); i++) {
 				if(qno.get(i) != null) {
 					int existingQno = y_createService.isExistQno(userid, qno.get(i));
-					System.out.println("existingQno: " + existingQno);
 					if(existingQno == qno.get(i)) {
 						qnaVo.setQno(qno.get(i));
 						qnaVo.setQues(ques.get(i));
@@ -194,7 +183,7 @@ public class YCreateController {
 						
 					}
 				}else {
-					//수정중, Q+A 추가
+					//수정폼, Q+A 추가
 					nextQno = y_createService.getNextval_QnA();
 					qnaVo.setQno(nextQno);
 					qnaVo.setQues(ques.get(i));
@@ -211,20 +200,20 @@ public class YCreateController {
 				rttr.addFlashAttribute("insert_result", "save_success");
 				if(prevPjnum == 0) {
 					int pjnum = userService.updatepjnum(prevPjnum, userid);
+					userService.updateTemptype("Y", userVo.getUserid());
 					userVo.setPjnum(pjnum);
+					userVo.setTemptype("Y");
 				}
 			}else {
 				rttr.addFlashAttribute("insert_result", "save_fail");
-			}
+			}	
 		session.setAttribute("url", userVo.getUrl());
 		return "redirect:/create/invite";
 	}
-	//업로드파일
+	//이미지파일 업로드
 	public String uploadFile(MultipartFile file) throws Exception {
 		String origionalName = file.getOriginalFilename();
-		System.out.println("filename: " + origionalName);
 		String filename = YFileUploader.uploadFile(origionalName, file.getBytes());
-		System.out.println("filename: " + filename);
 		return filename;
 	}
 
@@ -237,39 +226,36 @@ public class YCreateController {
 			userid = userService.findid(url);
 		}else {
 			userid = userService.findid(url);
-			System.out.println("invite id: " + userid);
 		}
-		Y_GuestPagingDto pagingDto = new Y_GuestPagingDto();
-		Map<String, Object> map = y_createService.searchInfo(userid, pagingDto);
+		Y_HomeVo homeVo = y_createService.searchHome(userid);
+		Y_PhotoVo photoVo = y_createService.searchPhoto(userid);
+		Map<String, Object> map = new HashMap<>();
+		map.put("homeVo", homeVo);
+		map.put("photoVo", photoVo);
 		model.addAttribute("map", map);
 		model.addAttribute("url", url);
-
 		return "/create/temp_y/home";
 	}
-	//청첩장 수정폼
+	//템플렛 수정폼
 	@RequestMapping(value = "/updateform", method = RequestMethod.GET)
 	public String updateform(Model model,HttpSession session, Y_GuestPagingDto pagingDto ) {
 		UserVo userVo = (UserVo)session.getAttribute("loginInfo");
-		String userid = userVo.getUserid();
-		Map<String, Object> map = y_createService.searchInfo(userid, pagingDto);
+		Map<String, Object> map = y_createService.searchInfo(userVo.getUserid(), pagingDto);
 		model.addAttribute("userVo", userVo);
 		model.addAttribute("map", map);
 		return "/create/temp_y/form";
 	}
 
-	//청첩장 질문+답변 삭제
+	//템플렛 Q+A 삭제
 	@RequestMapping(value="/delqna", method= RequestMethod.GET)
 	@ResponseBody
-
 	public boolean delQna (int qno, String userid) {	
-		System.out.println("delqna qno: " + qno);
-		System.out.println("delqna userid: " + userid);
-		System.out.println("delqna");
 		Y_LikeVo likeVo = new Y_LikeVo(qno, userid);
 		int likecount = y_likeService.isLike(likeVo);
 		System.out.println("controller delQna: " + likecount);
+		boolean likedel = false;
 		if(likecount > 0) {
-			boolean likedel = y_likeService.delLike(likeVo);
+			likedel = y_likeService.delLike(likeVo);
 			if(likedel == true) {
 				y_createService.delQna(qno, userid);
 			}else if(likedel == false){
@@ -278,7 +264,7 @@ public class YCreateController {
 		}else if(likecount == 0) {
 			y_createService.delQna(qno, userid);
 		}		
-		return true;
+		return likedel;
 	}
 	//our story(@청첩장)
 	@RequestMapping(value = "/story", method = RequestMethod.GET)
@@ -299,8 +285,6 @@ public class YCreateController {
 	@RequestMapping(value = "/qna", method = RequestMethod.GET)
 	public String getQna(Model model, HttpSession session, String url, Y_GuestPagingDto pagingDto) {
 		String userid = userService.findid(url);
-		System.out.println("qna controller: " + userid);
-		System.out.println(pagingDto);
 		List<Y_QnaVo> qnalist = y_createService.searchQna(userid, pagingDto);
 		Y_PhotoVo photoVo = y_createService.searchPhoto(userid);
 		Y_HomeVo homeVo = y_createService.searchHome(userid);
@@ -318,7 +302,6 @@ public class YCreateController {
 	@RequestMapping(value = "/showmes", method = RequestMethod.GET)
 	public String getMes(Model model, HttpSession session, String url) {
 		String userid = userService.findid(url);
-		System.out.println("qna controller: " + userid);
 		List<Y_MessageVo> meslist = y_createService.searchMes(userid);
 		Y_PhotoVo photoVo = y_createService.searchPhoto(userid);
 		Y_HomeVo homeVo = y_createService.searchHome(userid);
@@ -337,21 +320,20 @@ public class YCreateController {
 		String userid = userService.findid(url);
 		int count = y_guestService.getreadcount(userid);
 		pagingDto.setPagingInfo(pagingDto.getPage(), count, pagingDto.getPerPage());
-//		System.out.println(pagingDto);
+		
 		List<Y_AskVo> askVo = y_guestService.qnalist(userid, pagingDto);
-
-		System.out.println("quesqna pagingDto: " + pagingDto);
 		Y_PhotoVo photoVo = y_createService.searchPhoto(userid);
 		Y_HomeVo homeVo = y_createService.searchHome(userid);
+		
 		Map<String, Object> map = new HashMap<>();
 		map.put("homeVo", homeVo);
 		map.put("photoVo", photoVo);
 		map.put("askVo", askVo);
+		
 		model.addAttribute("map", map);
 		model.addAttribute("recipient", userid);
 		model.addAttribute("pagingDto", pagingDto);
 		model.addAttribute("url", url);
-		model.addAttribute("userid", userid);
 		return "/create/temp_y/guestqna";
 	}
 	//오시는길 (@청첩장)
@@ -372,12 +354,9 @@ public class YCreateController {
 	//쪽지보내기 페이지(@청첩장)
 	@RequestMapping(value = "/insertmes", method = RequestMethod.GET)
 	public String insertMes(Model model, HttpSession session, String url) {
-
 		if(url == null || url == "") {
 			url = (String) session.getAttribute("url");
-			System.out.println("insermes" + url);
 		}
-		System.out.println("insertmes url: " + url);
 		String userid = userService.findid(url);
 		Y_PhotoVo photoVo = y_createService.searchPhoto(userid);
 		Y_HomeVo homeVo = y_createService.searchHome(userid);
@@ -393,7 +372,6 @@ public class YCreateController {
 	@RequestMapping(value = "/message", method = RequestMethod.POST)
 	public String insertMes(MultipartFile file, Y_MessageVo mesVo, HttpSession session, Model model, 
 							RedirectAttributes rttr, String url) {
-		System.out.println("message url: " + url);
 		String userid = userService.findid(url);
 		mesVo.setRecipient(userid);
 		boolean result = false;
@@ -403,7 +381,10 @@ public class YCreateController {
 			result = y_createService.insertMes(mesVo);
 			model.addAttribute("url", url);
 			if(result == true) {
+			session.removeAttribute("unreadMes");
 			rttr.addFlashAttribute("result", "insert_success");
+			int count = y_guestService.unreadQues(mesVo.getRecipient());
+			session.setAttribute("unreadMes", count);
 			}else {
 			rttr.addFlashAttribute("result", "insert_fail");
 			}
@@ -417,7 +398,6 @@ public class YCreateController {
 	
 	public void update_tempinfo(int prevPjnum, String userid, String temptype) {
 		userService.updatepjnum(prevPjnum, userid);
-		System.out.println("controller: " + temptype);
 		userService.updateTemptype(temptype, userid);
 	}
 	//청첩장 삭제
@@ -427,20 +407,20 @@ public class YCreateController {
 		String userid = userVo.getUserid();
 		//pjnum 1 -> 0, temptype 'y' -> null
 		
-		//하객 쪽지 삭제
+		//하객쪽지 삭제
 		boolean isMes = y_createService.mescount(userid);
 		if(isMes == true) {
 			y_createService.delMes(userid);
 		}
-		//하객 질문 삭제
-		boolean isQues = y_guestService.quescount(userid);
-		if(isQues == true) {
+		//하객질문 삭제
+		int quescount = y_guestService.getcount(userid);
+		if(quescount>0) {
 			y_guestService.delQues(userid);
 		}
-		//하객 메세지 하트여부 체크
+		//하객하트 체크
 		int likecount = y_likeService.likecheck(userid);
 		boolean result = false;
-		String page = null;
+		String page = "";
 		if(likecount > 0) {
 			//하트 삭제
 			boolean result_delLike = y_likeService.delete(userid);
@@ -466,5 +446,5 @@ public class YCreateController {
 			page = "/create/temp_y/updateform";
 		}
 		return page;
-	}
+	}//청첩장 삭제
 }

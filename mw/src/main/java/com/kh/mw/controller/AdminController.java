@@ -20,6 +20,11 @@ public class AdminController {
 	
 	@Autowired
 	private AdminService adminService;
+	//관리자 페이지 띄우기
+		@RequestMapping(value="/page", method = RequestMethod.GET)
+		public String planner() {
+			return "redirect:/admin/list";
+		}
 	
 	//관리자 등록 화면 띄우기
 	@RequestMapping(value="/register", method = RequestMethod.GET)
@@ -33,8 +38,6 @@ public class AdminController {
 		System.out.println("AdminComtroller,vendorVo:"+vendorVo);
 		boolean result=adminService.insertVendor(vendorVo);
 		rttr.addFlashAttribute("register_result",result);
-		System.out.println("AdminComtroller,result:"+result);
-		
 		List<CategoryVo> cateList=adminService.listCategory(categoryVo);
 		model.addAttribute("cateList",cateList);
 		
@@ -46,7 +49,6 @@ public class AdminController {
 	public String listVendor(VendorVo vendorVo,Model model,CategoryVo categoryVo,PagingVo pagingVo) {
 		//페이징처리하기
 		pagingVo.setPagingInfo(pagingVo.getPage(), pagingVo.getPerPage(), adminService.getCount(pagingVo, vendorVo));
-		
 		List<VendorVo> list = adminService.listVendor(vendorVo,pagingVo);
 		List<CategoryVo> cateList=adminService.listCategory(categoryVo);
 		model.addAttribute("list",list);

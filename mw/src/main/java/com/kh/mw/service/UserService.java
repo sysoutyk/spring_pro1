@@ -13,42 +13,31 @@ public class UserService {
 	UserDao userDao;
 	
 	public boolean registerRun(UserVo userVo) {
-//		System.out.println("레지스터 서비스");
-		boolean result = userDao.registerRun(userVo);
-		return result;
+		return userDao.registerRun(userVo);
 	}
 
 	public UserVo login_run(String userid, String userpw) {
-//		System.out.println("로그인런 서비스");
 		UserVo vo = userDao.login_run(userid, userpw);
-//		System.out.println(vo.getWithdraw());
-//		if(vo.getWithdraw().equals("Y")) {
-//			return null;
-//		}else {
 		return vo;
-//		}
 	}
 	
 	public boolean isExistId(String inputId) {
-//		System.out.println("서비스: 아이디체크" + inputId);
-		boolean result = userDao.isExistId(inputId);
-		return result;
+		return userDao.isExistId(inputId);
 	}
 	public boolean isExistUrl(String url) {
-//		System.out.println("서비스: url체크" + inputUrl);
 		return userDao.isExistUrl(url);
 	}
 	public UserVo detail(String userid, String userpw) {
-//		System.out.println("서비스: 디테일");
 		UserVo userVo = userDao.detail(userid, userpw);
 		return userVo;
 	}
 	public boolean modify(UserVo userVo) {
-//		System.out.println("모디파이서비스"+userVo);
-		boolean result = userDao.modify(userVo);
-		return result;
+		return userDao.modify(userVo);
 	}
-
+	//회원 탈퇴
+		public boolean delAccount(String userid) {
+			return userDao.delAccount(userid);
+		}
 	//pjnum status 체크
 	public int checkpjnum (String userid) {
 		return userDao.checkpjnum(userid);
@@ -65,9 +54,8 @@ public class UserService {
 	public boolean defaultTemptype(String temptype, String userid) {
 		return userDao.defaultTemptype(temptype, userid);
 	}
-	public boolean delAccount(String userid) {
-		return userDao.delAccount(userid);
-	}
+	
+	//url값으로 userid찾기
 	public String findid(String url) {
 		return userDao.findid(url);
 	}

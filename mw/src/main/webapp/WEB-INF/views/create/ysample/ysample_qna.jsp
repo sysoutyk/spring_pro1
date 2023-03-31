@@ -27,7 +27,7 @@
 								<span class="subheading"> <!-- session bridenm and groomnm -->
 									지은탁+도깨비									
 								</span>
-								<h2>Q + A</h2>
+								<h2>Q + A from 커플</h2>
 							</div>
 						</div>
 					</div>

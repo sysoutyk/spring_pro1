@@ -154,7 +154,7 @@ $(document).ready(function(){
 						<label>카테고리</label>
 
 						<div class="input-group" >
-							<select class="form-control" id="v_category">
+							<select class="form-control" id="v_category" style="margin-right:20px">
 								<option value="100"
 									<c:if test="${pagingVo.v_category == '100'}">selected</c:if>>Wedding
 									Hall</option>
@@ -192,7 +192,7 @@ $(document).ready(function(){
 									<c:if test="${pagingVo.v_local == '5'}"> selected </c:if>>울산광역시
 								</option>
 							</select>
-							<div class="btnSearch">
+							<div class="btnSearch" style="margin-right:20px">
 								<button class="btn btn-secondary" id="btnSearch">검색</button>
 							</div>
 							<input type="text" class="input" name="cateCode" id="cateCode" value="" style="margin-top: 15px"/>	

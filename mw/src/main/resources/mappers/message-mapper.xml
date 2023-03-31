@@ -45,11 +45,11 @@
 		where recipient = #{recipient}
 		and bno = #{bno}
 	</select>
-	<select id="ismesread" resultType="Y_MessageVo">
-		select * from tbl_Ymessage
-		where recipient = #{recipient}
-		and bno = #{bno}
-	</select>
+<!-- 	<select id="ismesread" resultType="Y_MessageVo"> -->
+<!-- 		select * from tbl_Ymessage -->
+<!-- 		where recipient = #{recipient} -->
+<!-- 		and bno = #{bno} -->
+<!-- 	</select> -->
 	<select id="unread" resultType="int">
 		select count(*) from tbl_Ymessage
         where recipient = #{userid}

@@ -17,7 +17,6 @@ public class CheckService {
 	
 	//체크리스트 등록하기
 	public boolean insertCheck(CheckVo checkVo) {
-		System.out.println("CheckService,checkVo"+checkVo);
 		return checkDao.insertCheck(checkVo);
 	}
 	

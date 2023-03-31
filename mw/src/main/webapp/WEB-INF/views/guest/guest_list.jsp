@@ -224,9 +224,9 @@ $(document).ready(function() {
 		var sData = {"arr_g_no" : arr_g_no, "userid" : userid};
 		$.post(url, sData, function(rData){
 			console.log(sData);
-			console.log(rData);
-			if(rData == "true"){
-				
+			console.log("sms rData: " + rData);
+			if(rData == "success"){
+				alert("전송되었습니다");
 			}
 		});
 	});

@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.kh.mw.dao.Y_GuestDao;
 import com.kh.mw.vo.Y_AskVo;
 import com.kh.mw.vo.Y_GuestPagingDto;
@@ -39,9 +38,7 @@ public class Y_GuestService {
 	public int getreadcount(String userid) {
 		return y_guestDao.getreadcount(userid);
 	}
-	public boolean quescount(String userid) {
-		return y_guestDao.quescount(userid);
-	}
+	
 	public boolean updateQues(Y_AskVo askVo) {
 		return y_guestDao.updateQues(askVo);
 	}

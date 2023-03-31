@@ -21,9 +21,7 @@ $(document).ready(function(){
 		var url = "";
 		var sData;
 		var count = parseInt($(this).text());
-		console.log("count: " + count);
 		var val = $(this).attr("data-value");
-		console.log("val: " + val);
 		if(val == undefined){
 			url = "/like/chkcookie";	
 	 		$.get(url, sData, function(rData){			
@@ -41,17 +39,13 @@ $(document).ready(function(){
 	 		};
 	 		$.post(url,sData,function(rData){
 	 			if(rData == true){
-	 				console.log("하트 입력 성공");
 	 				count++;
-	 				console.log(that);
-	 				console.log("count after insert" + count);
 	 				that.text(count);
 	 				that.css("color", "red");
 	 			}
 	 		});
 
 		}else if(val != undefined){
-			console.log("같은쿠키");
 			$.get(url,sData, function(rData){				
 				alert("이미 선택하신 하트입니다");
 			});//.$get
@@ -65,10 +59,8 @@ $(document).ready(function(){
 			e.preventDefault();
 			alert("이 기능은 미리보기에서 제공하지 않습니다.");
 		}else{
-			console.log("click");
 			var url = "${url}";
 			var prevpage = parseInt(${pagingDto.page})-1;
-			console.log("prevpage: " + prevpage);
 			$("#frmPaging").find("input[name=page]").val(prevpage);
 			$("#frmPaging").find("input[name=url]").val(url);
 			$("#frmPaging").attr("action", "/create/guestqna").submit();
@@ -80,10 +72,8 @@ $(document).ready(function(){
 			e.preventDefault();
 			alert("이 기능은 미리보기에서 제공하지 않습니다");
 		}else{
-			console.log("click");
 			var url = "${url}";
 			var nextpage = parseInt(${pagingDto.page})+1;
-			console.log("nextpage: " + nextpage);
 			$("#frmPaging").find("input[name=page]").val(nextpage);
 			$("#frmPaging").find("input[name=url]").val(url);
 			$("#frmPaging").attr("action", "/create/guestqna").submit();

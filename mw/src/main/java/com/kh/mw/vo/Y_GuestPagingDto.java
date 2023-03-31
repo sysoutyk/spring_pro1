@@ -4,8 +4,8 @@ import lombok.Data;
 
 @Data
 public class Y_GuestPagingDto {
-	private int page = 1; //시작페이지 번호
-	private int perPage = 5;//페이지 범위 
+	private int page = 1; 
+	private int perPage = 5; 
 	private int startRow = 1;
 	private int endRow = 5;
 	private int totalPage;

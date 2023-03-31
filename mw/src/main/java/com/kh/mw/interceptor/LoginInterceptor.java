@@ -22,7 +22,6 @@ public class LoginInterceptor implements HandlerInterceptor {
 			String uri = request.getRequestURI();
 			System.out.println("uri:" + uri);
 			String queryString = request.getQueryString();
-			System.out.println("queryString:" + queryString);
 			String targetLocation = uri + "?" + queryString;
 			session.setAttribute("targetLocation", targetLocation);
 			response.sendRedirect("/user/login");

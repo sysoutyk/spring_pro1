@@ -192,7 +192,7 @@ $(function(){
 
 										<div class="input-group" style="margin: 50px">
 
-											<select class="form-control" name="v_category">
+											<select class="form-control" name="v_category" style="margin-right:20px;">
 												<option value="100"
 													<c:if test="${pagingVo.v_category == '100'}">selected</c:if>>Wedding
 													Hall</option>
@@ -232,7 +232,7 @@ $(function(){
 
 											<div class="input-group-append">
 												<button id="btnSearch" class="btn btn-secondary"
-													type="button">Search</button>
+													type="button" style="margin-right:20px; margin-left:20px">Search</button>
 											</div>
 
 											<div class="input-group-append">

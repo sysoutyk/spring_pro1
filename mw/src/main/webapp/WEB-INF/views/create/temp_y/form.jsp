@@ -98,7 +98,7 @@ $(document).ready(function() {
 				$(".delQnA").click(function(e) {
 					console.log("click");
 					e.preventDefault();
-					clonedQnA.remove();
+					$(this).parent().parent().remove();
 				});
 
 			});
@@ -123,7 +123,6 @@ $(document).ready(function() {
 				console.log(that);
 				that.parent().parent().remove();
 			}
-
 		});
 
 	});
@@ -414,15 +413,16 @@ $(document).ready(function() {
 											<c:forEach var="qnaVo" items="${map.qnaVo }"
 												varStatus="count">
 												<div id="updateQnA" class="updateQnA"style="text-align: right">
-												<a class="col-md-12" href="#"> <i
-														class="fa fa-trash-o delQnA" aria-hidden="true"
-													<c:choose>
-														<c:when test="${ count.first}"> 
-															style="display:none"
-														</c:when>
-														<c:when test="${not count.first}">
-														</c:when>										
-													</c:choose>>삭제</i>
+													<a class="col-md-12" href="#"> 
+														<i class="fa fa-trash-o delQnA" aria-hidden="true"
+															<c:choose>
+																<c:when test="${ count.first}"> 
+																	style="display:none"
+																</c:when>
+																<c:when test="${not count.first}">
+																</c:when>										
+															</c:choose>>삭제
+														</i>
 													</a>		
 													<div class="form-group" style="display: none">
 														<div class="col-md-12">

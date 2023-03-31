@@ -253,18 +253,19 @@ public class YCreateController {
 		Y_LikeVo likeVo = new Y_LikeVo(qno, userid);
 		int likecount = y_likeService.isLike(likeVo);
 		System.out.println("controller delQna: " + likecount);
-		boolean likedel = false;
+		boolean delqna = false;
 		if(likecount > 0) {
-			likedel = y_likeService.delLike(likeVo);
+			boolean likedel = y_likeService.delLike(likeVo);
 			if(likedel == true) {
-				y_createService.delQna(qno, userid);
-			}else if(likedel == false){
-				y_createService.delQna(qno, userid);
+				delqna = y_createService.delQna(qno, userid);
+			}else {
+				delqna = y_createService.delQna(qno, userid);
 			}
 		}else if(likecount == 0) {
-			y_createService.delQna(qno, userid);
+			System.out.println("likecount is 0");
+				delqna = y_createService.delQna(qno, userid);
 		}		
-		return likedel;
+		return delqna;
 	}
 	//our story(@청첩장)
 	@RequestMapping(value = "/story", method = RequestMethod.GET)
@@ -381,12 +382,14 @@ public class YCreateController {
 			result = y_createService.insertMes(mesVo);
 			model.addAttribute("url", url);
 			if(result == true) {
-			session.removeAttribute("unreadMes");
-			rttr.addFlashAttribute("result", "insert_success");
-			int count = y_guestService.unreadQues(mesVo.getRecipient());
-			session.setAttribute("unreadMes", count);
+				System.out.println("새 mes 입력성공");
+				session.removeAttribute("unreadMes");
+				rttr.addFlashAttribute("result", "insert_success");
+				int count = y_guestService.unreadmes(mesVo.getRecipient());
+				System.out.println("unreadMes_count" + count);
+				session.setAttribute("unreadMes", count);
 			}else {
-			rttr.addFlashAttribute("result", "insert_fail");
+				rttr.addFlashAttribute("result", "insert_fail");
 			}
 			session.setAttribute("url", url);
 		} catch (Exception e) {

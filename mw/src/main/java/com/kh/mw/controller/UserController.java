@@ -44,6 +44,7 @@ public class UserController {
 		UserVo vo = userService.login_run(userid, userpw);
 		int unreadQues = y_guestService.unreadQues(userid);
 		int unreadMes = y_guestService.unreadmes(userid);
+		
 		//로그인이 안되거나 탈퇴한 회원이면
 		if(vo==null) {
 			rttr.addFlashAttribute("loginResult","fail");

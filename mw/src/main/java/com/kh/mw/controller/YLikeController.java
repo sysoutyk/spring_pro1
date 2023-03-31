@@ -46,9 +46,10 @@ public class YLikeController {
 	@RequestMapping(value="/isLike", method= RequestMethod.GET)
 	@ResponseBody
 	public String isLike(Y_LikeVo likeVo) {
-		int count  = y_likeService.isLike(likeVo);
+		int count = y_likeService.isLike(likeVo);
 		return String.valueOf(count);
 	}
+
 	//하객질문 하트입력
 	@RequestMapping(value="/sendaskLike", method= RequestMethod.POST)
 	@ResponseBody

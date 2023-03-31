@@ -31,10 +31,9 @@ public class SmsController {
 		System.out.println(arr_g_no);
 		String phonenumber = String.join(",", arr_g_no);
 		String to = phonenumber.replaceAll("-", "");
-		String server_addr = "172.16.6.35/create/invite?url=";
+		String server_addr = "172.16.6.35:8088/create/invite?url=";
 		UserVo userVo = (UserVo)session.getAttribute("loginInfo");
 		String web_addr = server_addr + userVo.getUrl();
-
 		
 		Y_HomeVo vo = ycreateService.searchHome(userVo.getUserid());
 		System.out.println(vo);
@@ -43,7 +42,6 @@ public class SmsController {
 		String webdate = vo.getWedDate();
 		String webtime = vo.getWedTime();
 		String webaddr = vo.getWed_addr();
-		
 		
 		String text = "저희 결혼합니다♥\n" + groomNm + "♥" + brideNm + " 결혼식에 초대합니다.\n" + "일시 : " + webdate +"&nbsp"+ webtime + "\n장소 : " + webaddr +"\n청첩장 : " + web_addr;
 		System.out.println(text);
